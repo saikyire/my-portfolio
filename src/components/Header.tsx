@@ -39,8 +39,7 @@ export default function Header({ activeSection, onNavClick }: HeaderProps) {
             </div>
           </div>
           <div className="font-display font-bold tracking-tight text-sm md:text-base">
-            <span className="text-white group-hover:text-accent-blue transition-colors">GOPI</span>
-            <span className="text-gray-500 font-mono text-xs ml-1">.nadh()</span>
+            <span className="text-white group-hover:text-accent-blue transition-colors">saigopinadh</span>
           </div>
         </div>
 
