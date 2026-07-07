@@ -9,7 +9,6 @@ import Experience from "./components/Experience.tsx";
 import Services from "./components/Services.tsx";
 import GithubMock from "./components/GithubMock.tsx";
 import Certifications from "./components/Certifications.tsx";
-import AiAssistant from "./components/AiAssistant.tsx";
 import Contact from "./components/Contact.tsx";
 import Footer from "./components/Footer.tsx";
 
@@ -79,9 +78,6 @@ export default function App() {
 
       {/* Footer Content */}
       <Footer />
-
-      {/* Floating AI Recruiter Chat Co-Pilot */}
-      <AiAssistant />
 
     </div>
   );
