@@ -377,74 +377,59 @@ export default function Hero({ onNavClick }: HeroProps) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="lg:col-span-5 flex justify-center"
+          className="lg:col-span-5 flex flex-col items-center justify-center"
         >
-          <div className="relative w-full max-w-sm aspect-square group">
+          <div className="relative w-64 h-64 md:w-80 md:h-80 group mt-4">
             
             {/* Spinning Neon Aura Rings */}
             <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-accent-blue via-transparent to-accent-purple opacity-20 blur-xl group-hover:opacity-40 transition-opacity animate-spin" style={{ animationDuration: "12s" }} />
             <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-accent-blue via-transparent to-accent-purple opacity-40 animate-spin" style={{ animationDuration: "8s" }} />
             
-            {/* Glass Container */}
-            <div className="absolute inset-0 rounded-full bg-neutral-900/90 border border-white/10 backdrop-blur-2xl overflow-hidden flex items-center justify-center p-6 shadow-2xl">
-              <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
-                
-                {/* Highlighted Visual Avatar Frame */}
-                <div 
-                  onClick={handleImageClick}
-                  className="w-48 h-48 md:w-56 md:h-56 rounded-full border-2 border-white/10 p-1 bg-gradient-to-tr from-accent-blue/30 via-transparent to-accent-purple/30 shadow-[0_0_25px_rgba(0,112,243,0.15)] relative overflow-hidden group-hover:scale-[1.03] group-hover:border-white/20 transition-all duration-500 cursor-pointer"
-                  title="Click to upload your custom profile picture!"
-                >
-                  {/* Internal background glow */}
-                  <div className="absolute inset-0 bg-radial-gradient(from-center, rgba(0, 112, 243, 0.15) 0%, transparent 85%)" />
-                  
-                  {/* Hidden file upload input */}
-                  <input 
-                    type="file" 
-                    ref={fileInputRef} 
-                    className="hidden" 
-                    accept="image/*" 
-                    onChange={handleFileChange} 
-                  />
-
-                  {/* Clean, Prominent Portrait Photo */}
-                  <div className="w-full h-full rounded-full overflow-hidden relative border border-white/5 bg-neutral-950">
-                    <img 
-                      src={profileImage} 
-                      alt="Sai Gopi Nadh" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      referrerPolicy="no-referrer"
-                      onError={() => {
-                        if (profileImage !== gopiPhoto) {
-                          setProfileImage(gopiPhoto);
-                        }
-                      }}
-                    />
-                    
-                    {/* Professional Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center z-30">
-                      <span className="text-white text-[10px] font-mono tracking-widest font-bold uppercase">Upload Photo</span>
-                      {isUploading && (
-                        <span className="text-accent-blue text-[9px] font-mono mt-1 animate-pulse">Uploading...</span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Clean, Highlighted Info Block */}
-                <div className="mt-5 flex flex-col items-center">
-                  <span className="text-white font-display font-bold text-lg md:text-xl tracking-wide">Sai Gopi Nadh</span>
-                  <span className="text-accent-blue font-mono text-[11px] md:text-xs mt-1.5 font-bold tracking-widest uppercase">ECE Graduate @ VVIT</span>
-                  
-                  {uploadError && (
-                    <span className="text-red-400 font-mono text-[10px] mt-2 text-center max-w-[180px] leading-tight block">{uploadError}</span>
-                  )}
-                </div>
-
+            {/* Image Container */}
+            <div 
+              onClick={handleImageClick}
+              className="absolute inset-0 rounded-full bg-neutral-900 border-4 border-white/10 overflow-hidden shadow-[0_0_40px_rgba(0,112,243,0.2)] cursor-pointer transition-transform duration-500 group-hover:scale-[1.02] group-hover:border-white/30"
+              title="Click to upload your custom profile picture!"
+            >
+              {/* Hidden file upload input */}
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                className="hidden" 
+                accept="image/*" 
+                onChange={handleFileChange} 
+              />
+              
+              <img 
+                src={profileImage} 
+                alt="Sai Gopi Nadh" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+                onError={() => {
+                  if (profileImage !== gopiPhoto) {
+                    setProfileImage(gopiPhoto);
+                  }
+                }}
+              />
+              
+              {/* Professional Hover Overlay */}
+              <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center z-30">
+                <span className="text-white text-xs font-mono tracking-widest font-bold uppercase">Upload Photo</span>
+                {isUploading && (
+                  <span className="text-accent-blue text-[10px] font-mono mt-2 animate-pulse">Uploading...</span>
+                )}
               </div>
             </div>
-
+          </div>
+          
+          {/* Info Block */}
+          <div className="mt-8 flex flex-col items-center">
+            <span className="text-white font-display font-bold text-2xl tracking-wide">Sai Gopi Nadh</span>
+            <span className="text-accent-blue font-mono text-xs mt-2 font-bold tracking-widest uppercase">ECE Graduate @ VVIT</span>
             
+            {uploadError && (
+              <span className="text-red-400 font-mono text-xs mt-2 text-center max-w-[250px] leading-tight block">{uploadError}</span>
+            )}
           </div>
         </motion.div>
 
