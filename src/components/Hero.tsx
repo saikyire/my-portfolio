@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, ChangeEvent } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowDown, Mail, Github, Linkedin, Briefcase, FileText } from "lucide-react";
-import gopiPhoto from "../assets/images/gopi_portrait_plaid_shirt_1783439640561.jpg";
+import gopiPhoto from "../assets/images/thumbs_up.jpg";
 
 interface HeroProps {
   onNavClick: (sectionId: string) => void;
