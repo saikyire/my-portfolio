@@ -14,68 +14,7 @@ export default function Hero({ onNavClick }: HeroProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Profile image upload state and handlers
-  const [profileImage, setProfileImage] = useState("/api/profile-image");
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState("");
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleImageClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      setUploadError("Please select a valid image file.");
-      return;
-    }
-
-    // Limit to 15MB
-    if (file.size > 15 * 1024 * 1024) {
-      setUploadError("Image must be smaller than 15MB.");
-      return;
-    }
-
-    setUploadError("");
-    setIsUploading(true);
-
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const base64Data = reader.result as string;
-      try {
-        // Optimistically set the image in UI
-        setProfileImage(base64Data);
-
-        const response = await fetch("/api/profile-image", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ image: base64Data }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to upload image to server.");
-        }
-
-        // Successfully uploaded, refresh with a timestamp to avoid cache
-        setProfileImage(`/api/profile-image?t=${Date.now()}`);
-      } catch (err: any) {
-        console.error(err);
-        setUploadError(err.message || "Failed to save profile picture.");
-      } finally {
-        setIsUploading(false);
-      }
-    };
-    reader.onerror = () => {
-      setUploadError("Failed to read the file.");
-      setIsUploading(false);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const roles = [
     "Forward Deployment Engineer",
@@ -387,38 +326,14 @@ export default function Hero({ onNavClick }: HeroProps) {
             
             {/* Image Container */}
             <div 
-              onClick={handleImageClick}
-              className="absolute inset-0 rounded-full bg-neutral-900 border-4 border-white/10 overflow-hidden shadow-[0_0_40px_rgba(0,112,243,0.2)] cursor-pointer transition-transform duration-500 group-hover:scale-[1.02] group-hover:border-white/30"
-              title="Click to upload your custom profile picture!"
+              className="absolute inset-0 rounded-full bg-neutral-900 border-4 border-white/10 overflow-hidden shadow-[0_0_40px_rgba(0,112,243,0.2)] transition-transform duration-500 group-hover:scale-[1.02] group-hover:border-white/30"
             >
-              {/* Hidden file upload input */}
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                className="hidden" 
-                accept="image/*" 
-                onChange={handleFileChange} 
-              />
-              
               <img 
-                src={profileImage} 
+                src={gopiPhoto} 
                 alt="Sai Gopi Nadh" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 referrerPolicy="no-referrer"
-                onError={() => {
-                  if (profileImage !== gopiPhoto) {
-                    setProfileImage(gopiPhoto);
-                  }
-                }}
               />
-              
-              {/* Professional Hover Overlay */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center z-30">
-                <span className="text-white text-xs font-mono tracking-widest font-bold uppercase">Upload Photo</span>
-                {isUploading && (
-                  <span className="text-accent-blue text-[10px] font-mono mt-2 animate-pulse">Uploading...</span>
-                )}
-              </div>
             </div>
           </div>
           
@@ -426,10 +341,6 @@ export default function Hero({ onNavClick }: HeroProps) {
           <div className="mt-8 flex flex-col items-center">
             <span className="text-white font-display font-bold text-2xl tracking-wide">Sai Gopi Nadh</span>
             <span className="text-accent-blue font-mono text-xs mt-2 font-bold tracking-widest uppercase">ECE Graduate @ VVIT</span>
-            
-            {uploadError && (
-              <span className="text-red-400 font-mono text-xs mt-2 text-center max-w-[250px] leading-tight block">{uploadError}</span>
-            )}
           </div>
         </motion.div>
 
